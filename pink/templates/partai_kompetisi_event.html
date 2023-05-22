@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block meta %}
+<title>Siruco | Jadwal Faskes</title>
+{% endblock meta %} {% block content %}
+<div class="container align-center">
+  <h1 class="subtitle text-center">List Partai Kompetisi Event</h1>
+  {% if message != "" %}
+  <div class="text-center">{{ message }}</div>
+  {% endif %}
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr>
+          <th>Nama Event</th>
+          <th>Tahun</th>
+          <th>Stadium</th>
+          <th>Jenis Partai</th>
+          <th>Kategori Superseries</th>
+          <th>Tanggal Mulai</th>
+          <th>Tanggal Selesai</th>
+          <th>Kapasitas</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in data %}
+        <tr>
+          <!-- <td>{{ forloop.counter }}</td> -->
+          <td>{{ item.nama_event }}</td>
+          <td>{{ item.tahun }}</td>
+          <td>{{ item.nama_stadium }}</td>
+          <td>{{ item.jenis_partai }}</td>
+          <td>{{ item.kategori_superseries }}</td>
+          <td>{{ item.tgl_mulai|date:'d M Y' }}</td>
+          <td>{{ item.tgl_selesai|date:'d M Y' }}</td>
+          <td>{{ item.kapasitas }}</td>
+          <td><a href="http://"><button>Mulai</button></a> <a href="http://"><button>Hasil Pertandingan</button></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

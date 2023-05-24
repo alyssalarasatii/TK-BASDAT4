@@ -1,28 +1,327 @@
-{% extends 'base.html' %} {% block meta %}
-<title>List Atlet Dilatih</title>
-{% endblock meta %} {% block content %}
-<h1>DAFTAR ATLET</h1>
-<div class="">
 
-<table class="table table-bordered text-center">
-    <thead>
-      <tr>
-        <th>Nama Atlet</th>
-        <th>Email</th>
-        <th>World Rank</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in data %}
-      <tr>
-        <!-- <td>{{ forloop.counter }}</td> -->
-        <td>{{ item.name }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.world_rank }}</td>        
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+{% extends 'base.html' %} 
+{% block meta %}
+<title>Partai Kompetisi Event</title>
+<!-- connect to font ubuntu -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- connect to icon awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Eew/yvORzLQ7V11H6nuWk7asIZvH0zZPy7C9KY1gWewAymFb2sk0Vbhwyf8EmzWV7vIZAG6ZuY6Uo4Q4B3gsOQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+<!-- link css, navbar untuk semua role terhubung ke satu file css yang sama biar gampang-->
+<link rel="stylesheet" type="text/css" href="navbar.css">
+<link rel="stylesheet" type="text/css" href="testnav.css">
+
+<style>
+  *{
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Ubuntu', sans-serif;
+}
+body{
+  margin: 0px;
+  padding: 0px;
+}
+
+
+
+.content{
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  margin: 0px;
+}
+
+
+.navigation-bar{
+  background-color: whitesmoke;
+  box-shadow: 3px -10px 12px rgba(93, 176, 117, 0.25);
+  height: 100%;
+}
+
+
+.navbar {
+  width: 200px;
+  height: 100%;
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  box-shadow: 3px -10px 12px rgba(176, 133, 93, 0.25);
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 40px;
+}
+
+.navbar li {
+  margin-bottom: 10px;
+ 
+}
+
+.navbar a {
+  display: block;
+  padding: 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.2s ease;
+  border-radius: 15px;
+  transition-duration: 0s;
+  transition-delay: 0s; /* Tambahkan ini */
+}
+
+.navbar a:hover{
+  /* box-shadow: 0px 4px 20px 5px rgba(253, 255, 145, 0.75); */
+  background-color: #eee;
+  transform: translateY(-7px);
+  border: none;
+  transition-delay: 0s; /* Tambahkan ini */
+}
+
+.navbar a:hover {
+  background-color: #eee;
+}
+
+.li-logout{
+  margin-top: 180px;
+  position: absolute;
+  bottom: 10px;
+}
+
+.li-logout a{
+  color: #B05D5D;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+.li-logout a:hover{
+  transform: none;
+  background-color: #fff;
+  transform: translateX(2px);
+}
+.logout-p{
+  margin: 0 0 6px 10px;
+}
+
+
+
+
+
+
+/* CSS bisa mulai diedit dari sini */
+.workpage{
+  height: 100%;
+  width: 100%;
+}
+
+</style>
+<style>
+  .event-list {
+    margin: 20px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #43aa43;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .content{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    margin: 0px;
+    }
+  </style>
+
+{% endblock meta %} 
+
+{% block content %}
+<div class="content">
+
+  <div class="navigation-bar">
+      <nav class="navbar">
+
+          <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Daftar Atlet</a></li>
+            <li><a href="#">Lihat Event</a></li>
+            <li><a href="#">Hasil Pertandingan</a></li>
+            <li class="li-logout">
+                <a href="#">
+                  <div class="logout-img">
+                      <img src="image/icon-logout.svg" alt="">
+                  </div>
+
+                    <div class="logout-p">
+                        <p>Logout</p>
+                    </div>
+
+                
+              </a>
+          </li>
+          </ul>
+        </nav>
+  </div>
+
+  <div class="workpage" style="margin: 5%;">
+      
+    <div class="container">  <!--content-->
+      <h1 class="subtitle text-center">Daftar Atlet</h1>
+      
+      <section class="pt-4 border border-shark-400 rounded-lg overflow-hidden flex flex-col w-full">
+        <hr class="border-shark-400">
+        <section class="space-y-2">
+            <h2 class="subtitle text-center">ATLET KUALIFIKASI</h2>
+        </section>
+        <table class="min-w-full text-sm font-light text-center">
+            <thead class="border-b font-medium border-shark-400">
+                <tr>
+                    <th scope="col" class="px-6 py-4">Nama</th>
+                    <th scope="col" class="px-6 py-4">Tanggal Lahir</th>
+                    <th scope="col" class="px-6 py-4">Negara Asal</th>
+                    <th scope="col" class="px-6 py-4">Play Right</th>
+                    <th scope="col" class="px-6 py-4">Height</th>
+                    <th scope="col" class="px-6 py-4">World Rank</th>
+                    <th scope="col" class="px-6 py-4">World Tour Rank</th>
+                    <th scope="col" class="px-6 py-4">Jenis Kelamin</th>
+                    <th scope="col" class="px-6 py-4">Total Point</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for atlet in atlet_kualifikasi %}
+                <tr class="border-b transition duration-300 ease-in-out hover:bg-shark-700 border-shark-400">
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.name }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.tgl_lahir|date:'j F Y' }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.negara_asal }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                        {% if atlet.play_right %}
+                        Ya
+                        {% else %}
+                        Tidak
+                        {% endif %}
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.height }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.world_rank }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.world_tour_rank}}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.jenis_kelamin }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.total_point }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <section class="pt-4 border border-shark-400 rounded-lg overflow-hidden flex flex-col w-full">
+      <hr class="border-shark-400">
+      <section class="space-y-2">
+          <h2 class="subtitle text-center">ATLET NONKUALIFIKASI</h2>
+      </section>
+        <table class="min-w-full text-sm font-light text-center">
+            <thead class="border-b font-medium border-shark-400">
+                <tr>
+                    <th scope="col" class="px-6 py-4">Nama</th>
+                    <th scope="col" class="px-6 py-4">Tanggal Lahir</th>
+                    <th scope="col" class="px-6 py-4">Negara Asal</th>
+                    <th scope="col" class="px-6 py-4">Play Right</th>
+                    <th scope="col" class="px-6 py-4">Height</th>
+                    <th scope="col" class="px-6 py-4">World Rank</th>
+                    <th scope="col" class="px-6 py-4">Jenis Kelamin</th>
+                    <th scope="col" class="px-6 py-4">Total Point</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for atlet in atlet_nonkualifikasi %}
+                <tr class="border-b transition duration-300 ease-in-out hover:bg-shark-700 border-shark-400">
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.name }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.tgl_lahir|date:'j F Y' }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.negara_asal }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                        {% if atlet.play_right %}
+                        Ya
+                        {% else %}
+                        Tidak
+                        {% endif %}
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.height }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">-</td>
+                    <td class="whitespace-nowrap px-6 py-4">{{ atlet.jenis_kelamin }}</td>
+                    <td class="whitespace-nowrap px-6 py-4">0</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <section class="pt-4 border border-shark-400 rounded-lg overflow-hidden flex flex-col w-full">
+      <hr class="border-shark-400">
+        <section class="space-y-2">
+            <h2 class="subtitle text-center">ATLET GANDA</h2>
+        </section>
+        <table class="min-w-full text-sm font-light text-center">
+            <thead class="border-b font-medium border-shark-400">
+                <tr>
+                    <th scope="col" class="px-6 py-4">Id Atlet Ganda</th>
+                    <th scope="col" class="px-6 py-4">Nama Atlet 1</th>
+                    <th scope="col" class="px-6 py-4">Nama Atlet 2</th>
+                    <th scope="col" class="px-6 py-4">Total Point</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for atlet in atlet_ganda %}
+                <tr class="">
+                    <td class="">{{ atlet.id_atlet_ganda }}</td>
+                    <td class="">{{ atlet.atlet1_name }}</td>
+                    <td class=""">{{ atlet.atlet2_name }}</td>
+                    <td class="">{{ atlet.total_point }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    </div>
+
+      
+  </div>
 
 
 </div>

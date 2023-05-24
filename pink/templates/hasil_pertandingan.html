@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block meta %}
+<title>Siruco | Jadwal Faskes</title>
+{% endblock meta %} {% block content %}
+<div class="container align-center">
+  <h1 class="subtitle text-center">HASIL PERTANDINGAN {{data.jenis_partai}} - {{data.nama_event}}</h1>
+
+  <div class="">
+
+
+    <p>Nama Event : {{data.nama_event}}</p>
+    <p>Stadium : {{data.nama_stadium}}</p>
+    <p>Hadiah : {{data.total_hadiah}}</p>
+    <p>Kategori Superseries : {{data.kategori_superseries}}</p>
+    <p>Tanggal Mulai : {{data.tgl_mulai|date:'d M Y'}}</p>
+    <p>Tanggal Selesai : {{data.tgl_selesai|date:'d M Y'}}</p>
+    <p>Kapasitas : {{data.kapasitas}}</p>            
+
+  </div>
+  <div>
+    <table>
+        <thead>
+            <tr>
+                <td>Tahap</td>
+                <td>Nama Tim</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{item.jenis_partai}}</td>
+            </tr>
+            <tr>blankkkkk</tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+  </div>
+</div>
+{% endblock content %}

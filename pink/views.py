@@ -15,6 +15,102 @@ def is_logged(request):
     except KeyError:
         return False
 
+# fitur no6
+def r_daftar_atlet(request):
+    # if request.method == 'GET' and is_logged(request):
+    #     if request.session['is_admin_satgas']:
+            query_non_ganda = """
+                SELECT name, tgl_lahir, negara_asal, play_right, height,AK.world_rank, world_tour_rank, jenis_kelamin, SUM(total_point), A.ID  
+                FROM ATLET_KUALIFIKASI AK, ATLET A, MEMBER M, POINT_HISTORY PH 
+                where AK.id_atlet = A.id and M.id = A.id and PH.id_atlet = A.id 
+                GROUP BY(name, tgl_lahir, negara_asal,play_right, height, AK.world_rank, world_tour_rank, jenis_kelamin, A.id); 
+            """
+            cursor = connection.cursor()
+            cursor.execute('SET search_path TO babadu;')
+            cursor.execute(query_non_ganda)
+            data_non_ganda = fetch(cursor) # data1
+
+            query_ganda = f"""
+                select id_atlet_ganda,string_agg(nama,',') as nama 
+                from ATLET_GANDA AG, ATLET A, MEMBER M  
+                WHERE (AG.id_atlet_kualifikasi = A.id or AG.id_atlet_kualifikasi_2 = A.id) 
+                and (M.id=id_atlet_kualifikasi or M.id=id_atlet_kualifikasi_2) 
+                and M.id=A.id GROUP BY(id_atlet_ganda)
+            """
+            cursor = connection.cursor()
+            cursor.execute('SET search_path TO babadu;')
+            cursor.execute(query_ganda)
+            data_ganda = fetch(cursor) # data2
+            
+            print(data_ganda)
+            response = {'data_non_ganda': data_non_ganda, 'data_ganda' : data_ganda}
+            print(response)
+            return render(request, 'r_daftar_atlet.html', response)
+        # return JsonResponse({'not_allowed': True})
+    # return redirect("/authenticate/?next=/jadwal-faskes/")
+
+# fitur no7
+def r_atlet_dilatih(request):
+    # if request.method == 'POST' and is_logged(request):
+        # if request.session['is_admin_satgas']:
+            id_pelatih = '841be0cc-9587-4164-b6eb-75cac8e62f17' # request.session['id_pelatih']
+            query = f"""
+                SELECT M.name , M.email, A.world_rank
+                FROM ATLET_PELATIH AP
+                JOIN MEMBER M ON M.id = AP.id_atlet
+                JOIN ATLET A ON A.id = AP.id_atlet
+                WHERE AP.id_pelatih = '{id_pelatih}';
+            """
+            cursor = connection.cursor()
+            cursor.execute('SET search_path TO babadu;')
+            cursor.execute(query)
+            data = fetch(cursor)
+
+            print(data)
+            response = {'data': data}
+            print(response)
+            return render(request, 'r_atlet_dilatih.html', response)
+        # return JsonResponse({'not_allowed': True})
+    # return redirect("/authenticate/?next=/jadwal-faskes/")
+
+def c_latih_atlet(request):
+    # if is_logged(request):
+        # if request.session['is_pelatih']:
+            if request.method == 'GET':
+                query = """
+                    SELECT M.id, M.name
+                    FROM ATLET A
+                    JOIN MEMBER M ON M.ID = A.ID;
+                """
+                cursor = connection.cursor()
+                cursor.execute('SET search_path TO babadu;')
+                cursor.execute(query)
+                data = fetch(cursor)
+
+                response = {'data': data}
+                print(response)
+                return render(request, 'c_latih_atlet.html', response)
+            
+            elif request.method == 'POST' :
+                id_pelatih = '841be0cc-9587-4164-b6eb-75cac8e62f17' # request.session['id_pelatih']
+                id_atlet = request.POST['id_atlet']
+
+                query = f"""
+                    INSERT INTO ATLET_PELATIH VALUES ('{id_pelatih}', '{id_atlet}');
+                """
+                cursor = connection.cursor()
+                cursor.execute('SET search_path TO babadu;')
+                cursor.execute(query)
+                # data = fetch(cursor)
+
+                # response = {'data': data}
+                # print(response)
+                return redirect('pink:r_latih_atlet')
+        # return JsonResponse({'not_allowed': True})
+    # return redirect("/authenticate/?next=/jadwal-faskes/")
+
+# TODO: fitur 8&9 
+# fitur no8
 def data_partai_kompetisi_event(request):
     # if request.method == 'GET' and is_logged(request):
     #     if request.session['is_admin_satgas']:
@@ -34,5 +130,32 @@ def data_partai_kompetisi_event(request):
             response = {'data': data}
             print(response)
             return render(request, 'partai_kompetisi_event.html', response)
+        # return JsonResponse({'not_allowed': True})
+    # return redirect("/authenticate/?next=/jadwal-faskes/")
+
+# fitur no9
+def data_hasil_pertandingan(request):
+    # if request.method == 'POST' and is_logged(request):
+        # if request.session['is_admin_satgas']:
+            nama_event = request.POST['nama_event']
+            tahun_event = request.POST['tahun_event']
+            jenis_partai = request.POST['jenis_partai']
+            query_nonganda = f"""
+                SELECT e.nama_event, e.nama_stadium, e.tgl_mulai, e.tgl_selesai, e.total_hadiah, e.kategori_superseries, p.jenis_partai, s.kapasitas, m.jenis_babak
+                FROM event as e
+                join partai_kompetisi as p on p.nama_event=e.nama_event and p.tahun_event=e.tahun
+                join stadium s on s.nama = e.nama_stadium
+                join match m on m.nama_event = e.nama_event and m.tahun_event = e.tahun
+                where e.nama_event = '{nama_event}' and e.tahun={tahun_event} and p.jenis_partai='{jenis_partai}';
+            """
+            cursor = connection.cursor()
+            cursor.execute('SET search_path TO babadu;')
+            cursor.execute(query_nonganda)
+            data = fetch(cursor) # data1
+
+            print(data)
+            response = {'data': data}
+            print(response)
+            return render(request, 'hasil_pertandingan.html', response)
         # return JsonResponse({'not_allowed': True})
     # return redirect("/authenticate/?next=/jadwal-faskes/")

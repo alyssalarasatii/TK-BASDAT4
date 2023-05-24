@@ -19,23 +19,76 @@ def is_logged(request):
 def r_daftar_atlet(request):
     # if request.method == 'GET' and is_logged(request):
     #     if request.session['is_admin_satgas']:
-            query_non_ganda = """
-                SELECT name, tgl_lahir, negara_asal, play_right, height,AK.world_rank, world_tour_rank, jenis_kelamin, SUM(total_point), A.ID  
-                FROM ATLET_KUALIFIKASI AK, ATLET A, MEMBER M, POINT_HISTORY PH 
-                where AK.id_atlet = A.id and M.id = A.id and PH.id_atlet = A.id 
-                GROUP BY(name, tgl_lahir, negara_asal,play_right, height, AK.world_rank, world_tour_rank, jenis_kelamin, A.id); 
+            query_kualifikasi = """
+                SELECT
+                    M.Name,
+                    M.Email,
+                    A.Tgl_Lahir,
+                    A.Negara_Asal,
+                    A.Play_Right,
+                    A.Height,
+                    A.World_Rank,
+                    CASE WHEN A.Jenis_Kelamin THEN 'Laki-laki' ELSE 'Perempuan' END AS Jenis_Kelamin,
+                    AK.World_Tour_Rank,
+                    COALESCE(SUM(PH.Total_Point), 0) AS Total_Point
+                FROM
+                    MEMBER AS M
+                    INNER JOIN ATLET AS A ON A.ID = M.ID
+                    INNER JOIN ATLET_KUALIFIKASI AS AK ON AK.ID_Atlet = A.ID
+                    LEFT JOIN POINT_HISTORY AS PH ON PH.ID_Atlet = A.ID
+                GROUP BY
+                    M.Name,
+                    M.Email,
+                    A.Tgl_Lahir,
+                    A.Negara_Asal,
+                    A.Play_Right,
+                    A.Height,
+                    A.World_Rank,
+                    A.Jenis_Kelamin,
+                    AK.World_Tour_Rank
+                ORDER BY
+                    A.World_Rank ASC;
             """
             cursor = connection.cursor()
             cursor.execute('SET search_path TO babadu;')
-            cursor.execute(query_non_ganda)
-            data_non_ganda = fetch(cursor) # data1
+            cursor.execute(query_kualifikasi)
+            data_kualifikasi = fetch(cursor) # data1
+    
+            query_non_kualifikasi = """
+                SELECT
+                    M.Name,
+                    M.Email,
+                    A.Tgl_Lahir,
+                    A.Negara_Asal,
+                    A.Play_Right,
+                    A.Height,
+                    A.World_Rank,
+                    CASE WHEN A.Jenis_Kelamin THEN 'Laki-laki' ELSE 'Perempuan' END AS Jenis_Kelamin
+                FROM
+                    MEMBER as M
+                    INNER JOIN ATLET as A ON A.ID = M.ID
+                    INNER JOIN ATLET_NON_KUALIFIKASI as AK ON AK.ID_Atlet = A.ID;
+            """
+            cursor = connection.cursor()
+            cursor.execute('SET search_path TO babadu;')
+            cursor.execute(query_non_kualifikasi)
+            data_non_kualifikasi = fetch(cursor) # data1
 
             query_ganda = f"""
-                select id_atlet_ganda,string_agg(nama,',') as nama 
-                from ATLET_GANDA AG, ATLET A, MEMBER M  
-                WHERE (AG.id_atlet_kualifikasi = A.id or AG.id_atlet_kualifikasi_2 = A.id) 
-                and (M.id=id_atlet_kualifikasi or M.id=id_atlet_kualifikasi_2) 
-                and M.id=A.id GROUP BY(id_atlet_ganda)
+                SELECT
+                    AG.ID_Atlet_Ganda,
+                    A1.Name AS Atlet1_Name,
+                    A2.Name AS Atlet2_Name,
+                    COALESCE(SUM(PH.Total_Point), 0) AS Total_Point
+                FROM
+                    ATLET_GANDA AG
+                    INNER JOIN MEMBER A1 ON A1.ID = AG.ID_Atlet_Kualifikasi
+                    INNER JOIN MEMBER A2 ON A2.ID = AG.ID_Atlet_Kualifikasi_2
+                    LEFT JOIN POINT_HISTORY PH ON PH.ID_Atlet = AG.ID_Atlet_Ganda
+                GROUP BY
+                    AG.ID_Atlet_Ganda,
+                    A1.Name,
+                    A2.Name;
             """
             cursor = connection.cursor()
             cursor.execute('SET search_path TO babadu;')
@@ -43,7 +96,9 @@ def r_daftar_atlet(request):
             data_ganda = fetch(cursor) # data2
             
             print(data_ganda)
-            response = {'data_non_ganda': data_non_ganda, 'data_ganda' : data_ganda}
+            response = {'atlet_kualifikasi': data_kualifikasi,
+                        'atlet_nonkualifikasi': data_non_kualifikasi,
+                        'atlet_ganda': data_ganda}
             print(response)
             return render(request, 'r_daftar_atlet.html', response)
         # return JsonResponse({'not_allowed': True})

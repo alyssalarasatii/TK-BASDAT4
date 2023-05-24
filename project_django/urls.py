@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('example_app.urls')),
     path('pink/', include('pink.urls')),
+    path('login-logout/', include('login_logout.urls')),
 ]

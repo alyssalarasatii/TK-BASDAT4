@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'example_app',
     'pink',
+    'login_logout',
 ]
 
 MIDDLEWARE = [

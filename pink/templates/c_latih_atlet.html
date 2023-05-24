@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block meta %}
+<title>C Latih Atlet</title>
+{% endblock meta %} {% block content %}
+<div class="">
+<form action="{% url 'pink:c_latih_atlet' %}", method="POST">
+    {% csrf_token %}
+    <label for="cars">Pilih atlet: </label>
+    <select id="" name="id_atlet">
+      {% for item in data %}
+      <option value="{{item.id}}">{{item.name}}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">SUBMIT</button>
+</form>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block meta %}
+<title>List Atlet Dilatih</title>
+{% endblock meta %} {% block content %}
+<h1>DAFTAR ATLET</h1>
+<div class="">
+
+<table class="table table-bordered text-center">
+    <thead>
+      <tr>
+        <th>Nama Atlet</th>
+        <th>Email</th>
+        <th>World Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in data %}
+      <tr>
+        <!-- <td>{{ forloop.counter }}</td> -->
+        <td>{{ item.name }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.world_rank }}</td>        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+</div>
+{% endblock content %}

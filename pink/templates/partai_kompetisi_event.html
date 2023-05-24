@@ -24,7 +24,6 @@
       <tbody>
         {% for item in data %}
         <tr>
-          <!-- <td>{{ forloop.counter }}</td> -->
           <td>{{ item.nama_event }}</td>
           <td>{{ item.tahun }}</td>
           <td>{{ item.nama_stadium }}</td>
@@ -33,7 +32,18 @@
           <td>{{ item.tgl_mulai|date:'d M Y' }}</td>
           <td>{{ item.tgl_selesai|date:'d M Y' }}</td>
           <td>{{ item.kapasitas }}</td>
-          <td><a href="http://"><button>Mulai</button></a> <a href="http://"><button>Hasil Pertandingan</button></a></td>
+          <td>
+            <a href="http://"><button>Mulai</button></a>
+              <form action="{% url 'pink:data_hasil_pertandingan' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="nama_event" value="{{ item.nama_event }}">
+                <input type="hidden" name="jenis_partai" value="{{ item.jenis_partai }}">
+                <input type="hidden" name="tahun_event" value="{{ item.tahun }}">
+                <button class="button" type="submit">Hasil Pertandingan</button>
+              </form>
+          </td>
+           
+            
         </tr>
         {% endfor %}
       </tbody>

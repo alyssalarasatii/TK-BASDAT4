@@ -140,21 +140,41 @@ def data_hasil_pertandingan(request):
             nama_event = request.POST['nama_event']
             tahun_event = request.POST['tahun_event']
             jenis_partai = request.POST['jenis_partai']
-            query_nonganda = f"""
-                SELECT e.nama_event, e.nama_stadium, e.tgl_mulai, e.tgl_selesai, e.total_hadiah, e.kategori_superseries, p.jenis_partai, s.kapasitas, m.jenis_babak
+            print(nama_event, tahun_event, jenis_partai)
+            query1 = f"""
+                SELECT e.nama_event, e.nama_stadium, e.tgl_mulai, e.tgl_selesai, e.total_hadiah, e.kategori_superseries, p.jenis_partai, s.kapasitas
                 FROM event as e
                 join partai_kompetisi as p on p.nama_event=e.nama_event and p.tahun_event=e.tahun
-                join stadium s on s.nama = e.nama_stadium
-                join match m on m.nama_event = e.nama_event and m.tahun_event = e.tahun
-                where e.nama_event = '{nama_event}' and e.tahun={tahun_event} and p.jenis_partai='{jenis_partai}';
+                join stadium s on e.nama_stadium = s.nama
+                where e.nama_event = '{nama_event}' and e.tahun = {tahun_event} and p.jenis_partai='{jenis_partai}';
             """
             cursor = connection.cursor()
             cursor.execute('SET search_path TO babadu;')
-            cursor.execute(query_nonganda)
-            data = fetch(cursor) # data1
+            cursor.execute(query1)
+            data1 = fetch(cursor) # data1
 
-            print(data)
-            response = {'data': data}
+            query2 = f"""
+                SELECT PMM.JENIS_BABAK, PMM.NOMOR_PESERTA
+                FROM PESERTA_MENGIKUTI_MATCH PMM
+                JOIN MATCH M ON M.jenis_babak = PMM.jenis_babak and M.tanggal = PMM.tanggal and M.waktu_mulai = PMM.waktu_mulai
+                JOIN PARTAI_KOMPETISI PK ON PK.nama_event = M.nama_event and PK.tahun_event = M.tahun_event
+
+                WHERE STATUS_MENANG = 't'
+                AND PK.jenis_partai = '{jenis_partai}'
+                AND PK.nama_event = '{nama_event}'
+                AND PK.tahun_event = {tahun_event}
+                
+                ORDER BY 
+                    array_position(array['Final','Semifinal','Perempat Final','R13','R16','R32'], 
+                                    PMM.jenis_babak);
+            """
+            cursor = connection.cursor()
+            cursor.execute('SET search_path TO babadu;')
+            cursor.execute(query2)
+            data2 = fetch(cursor) # data1
+
+            print(data1)
+            response = {'data1': data1[0], 'data2' : data2}
             print(response)
             return render(request, 'hasil_pertandingan.html', response)
         # return JsonResponse({'not_allowed': True})

@@ -55,7 +55,8 @@ def sponsor_form(request):
     if request.method == 'GET':
 
         query_dropdown = """
-            select nama_brand from sponsor;
+            select nama_brand from sponsor where id not in 
+            (select id_sponsor from atlet_sponsor asp where asp.id_atlet='e692d88a-9a46-4ff4-b07f-a72567f2e34c');
         """
         cursor = connection.cursor()
         cursor.execute('SET search_path TO babadu;')
@@ -73,6 +74,8 @@ def sponsor_form(request):
         return render(request, 'sponsor_form.html', response)
     
     elif request.method == 'POST':
+        # id_member = request.session['id']
+        
         nama_sponsor = request.POST['nama_sponsor']
         tanggal_mulai = request.POST['tanggal_mulai']
         tanggal_selesai = request.POST['tanggal_selesai']

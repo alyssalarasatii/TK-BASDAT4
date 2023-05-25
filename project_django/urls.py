@@ -24,4 +24,6 @@ urlpatterns = [
     path('register/', include('c_pengguna.urls')),
     path('atlet/', include('atlet.urls')),
     path('ungu/', include('ungu.urls')),
+    path('dashboard/', include('dashboard.urls')),
+
 ]

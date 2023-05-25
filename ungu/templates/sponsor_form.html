@@ -215,24 +215,22 @@ body {
                 <label for="id_nama_sponsor">Nama Sponsor:</label>
                 <select id="id_nama_sponsor" name="nama_sponsor">
                   <option value="">Pilih Sponsor</option>
-                  <option value="Sponsor A">Sponsor A</option>
-                  <option value="Sponsor B">Sponsor B</option>
-                  <option value="Sponsor C">Sponsor C</option>
+                  {% for item in dropdowns %}
+                    <option value="{{item.nama_brand}}">{{item.nama_brand}}</option>
+                  {% endfor %}
+
                 </select>
-                <br>
+                <br><br>
                 <label for="id_tanggal_mulai">Tanggal Mulai:</label>
                 <input type="date" id="id_tanggal_mulai" name="tanggal_mulai">
-                <br>
+                <br><br>
                 <label for="id_tanggal_selesai">Tanggal Selesai:</label>
                 <input type="date" id="id_tanggal_selesai" name="tanggal_selesai">
                 <br>
                 <button type="submit">SUBMIT</button>
               </form>
-  
               
           </div>
-  
-  
       </div>
       
   </body>

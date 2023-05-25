@@ -226,41 +226,18 @@ body {
           <div class="container">
             <div class="row">
               <div class="col-md-6">
+                {% for item in data %}
                 <div class="card">
-                    <h2>EVENT NAME</h2>
-                    <p><strong>Stadium:</strong> stadium 1</p>
-                    <p><strong>Hadiah:</strong> hadiah 1</p>
-                    <p><strong>Kategori Superseries:</strong> cat_ss 1</p>
-                    <p><strong>Kategori Spesialisasi:</strong> cat_sp 1</p>
-                    <p><strong>Tanggal Mulai:</strong> start_date 1</p>
-                    <p><strong>Tanggal Selesai:</strong> end_date 1</p>
-                    <p><strong>Kapasitas:</strong> cat 1</p>
-                      <button>Unenroll</button>
+                    <h2>{{item.nama_event}}</h2>
+                    <p><strong>Tahun: </strong>{{item.tahun}}</p>
+                    <p><strong>Stadium: </strong>{{item.nama_stadium}}</p>
+                    <p><strong>Kategori Superseries: </strong>{{item.kategori_superseries}}</p>
+                    <p><strong>Tanggal Mulai: </strong>{{item.tgl_mulai}}</p>
+                    <p><strong>Tanggal Selesai: </strong>{{item.tgl_selesai}}</p>
+                    <button>Unenroll</button>
+
                   </div>
-                  <br>
-                  <div class="card">
-                    <h2>EVENT NAME</h2>
-                    <p><strong>Stadium:</strong> stadium 1</p>
-                    <p><strong>Hadiah:</strong> hadiah 1</p>
-                    <p><strong>Kategori Superseries:</strong> cat_ss 1</p>
-                    <p><strong>Kategori Spesialisasi:</strong> cat_sp 1</p>
-                    <p><strong>Tanggal Mulai:</strong> start_date 1</p>
-                    <p><strong>Tanggal Selesai:</strong> end_date 1</p>
-                    <p><strong>Kapasitas:</strong> cat 1</p>
-                      <button>Unenroll</button>
-                  </div>
-                  <br>
-                  <div class="card">
-                    <h2>EVENT NAME</h2>
-                    <p><strong>Stadium:</strong> stadium 1</p>
-                    <p><strong>Hadiah:</strong> hadiah 1</p>
-                    <p><strong>Kategori Superseries:</strong> cat_ss 1</p>
-                    <p><strong>Kategori Spesialisasi:</strong> cat_sp 1</p>
-                    <p><strong>Tanggal Mulai:</strong> start_date 1</p>
-                    <p><strong>Tanggal Selesai:</strong> end_date 1</p>
-                    <p><strong>Kapasitas:</strong> cat 1</p>
-                      <button>Unenroll</button>
-                  </div>
+                  {% endfor %}
               </div>
             </div>
           </div>

@@ -1,0 +1,25 @@
+.workpage{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 25px;
+}
+
+.left-wp, .right-wp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+}
+
+.info{
+    margin-top: 20px;
+    
+}
+.information{
+    color: grey;
+}
+.value{
+    margin-top: 3px;
+}

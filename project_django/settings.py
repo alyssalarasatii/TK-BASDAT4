@@ -102,7 +102,6 @@ DATABASES = {
         'PORT': '7550'
     }
 }
-print(DATABASES)
 
 # if PRODUCTION:
 #     DATABASES['default'] = dj_database_url.config(

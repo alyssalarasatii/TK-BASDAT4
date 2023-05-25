@@ -10,12 +10,6 @@
 <!-- connect to icon awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Eew/yvORzLQ7V11H6nuWk7asIZvH0zZPy7C9KY1gWewAymFb2sk0Vbhwyf8EmzWV7vIZAG6ZuY6Uo4Q4B3gsOQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-
-<!-- link css, navbar untuk semua role terhubung ke satu file css yang sama biar gampang-->
-<link rel="stylesheet" type="text/css" href="navbar.css">
-<link rel="stylesheet" type="text/css" href="testnav.css">
-
 <style>
   *{
   padding: 0px;
@@ -210,7 +204,6 @@ body{
       <h1 class="subtitle text-center">Daftar Atlet</h1>
       
       <section class="pt-4 border border-shark-400 rounded-lg overflow-hidden flex flex-col w-full">
-        <hr class="border-shark-400">
         <section class="space-y-2">
             <h2 class="subtitle text-center">ATLET KUALIFIKASI</h2>
         </section>
@@ -252,7 +245,6 @@ body{
         </table>
     </section>
     <section class="pt-4 border border-shark-400 rounded-lg overflow-hidden flex flex-col w-full">
-      <hr class="border-shark-400">
       <section class="space-y-2">
           <h2 class="subtitle text-center">ATLET NONKUALIFIKASI</h2>
       </section>
@@ -292,32 +284,34 @@ body{
         </table>
     </section>
     <section class="pt-4 border border-shark-400 rounded-lg overflow-hidden flex flex-col w-full">
-      <hr class="border-shark-400">
+    <div>
         <section class="space-y-2">
-            <h2 class="subtitle text-center">ATLET GANDA</h2>
+          <h2 class="subtitle text-center">ATLET GANDA</h2>
         </section>
         <table class="min-w-full text-sm font-light text-center">
-            <thead class="border-b font-medium border-shark-400">
-                <tr>
-                    <th scope="col" class="px-6 py-4">Id Atlet Ganda</th>
-                    <th scope="col" class="px-6 py-4">Nama Atlet 1</th>
-                    <th scope="col" class="px-6 py-4">Nama Atlet 2</th>
-                    <th scope="col" class="px-6 py-4">Total Point</th>
+          <thead class="border-b font-medium border-shark-400">
+              <tr>
+                  <th scope="col" class="px-6 py-4">Id Atlet Ganda</th>
+                  <th scope="col" class="px-6 py-4">Nama Atlet 1</th>
+                  <th scope="col" class="px-6 py-4">Nama Atlet 2</th>
+                  <th scope="col" class="px-6 py-4">Total Point</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                {% for atlet in atlet_ganda %}
-                <tr class="">
-                    <td class="">{{ atlet.id_atlet_ganda }}</td>
-                    <td class="">{{ atlet.atlet1_name }}</td>
-                    <td class=""">{{ atlet.atlet2_name }}</td>
-                    <td class="">{{ atlet.total_point }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+              </tr>
+          </thead>
+          <tbody>
+              {% for atlet in atlet_ganda %}
+              <tr class="">
+                  <td class="">{{ atlet.id_atlet_ganda }}</td>
+                  <td class="">{{ atlet.atlet1_name }}</td>
+                  <td class=""">{{ atlet.atlet2_name }}</td>
+                  <td class="">{{ atlet.total_point }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      </section>
+    </div>
+      
     </div>
 
       

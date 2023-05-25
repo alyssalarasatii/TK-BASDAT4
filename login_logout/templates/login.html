@@ -53,53 +53,23 @@
   </head>
   <body>
     <div class="container">
-      <h1>FORM LOGIN</h1>
+      <h1 class="subtitle text-center">FORM LOGIN</h1>
       <form method="POST" action="{% url 'login-logout:login' %}">
         {% csrf_token %}
-        <label for="name">Nama:</label>
-        <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" minlength="5" maxlength="150">
+      <label for="nama" class="form-label">Nama:</label>
+      <input type="text" id="nama" name="nama" class="form-control" required>
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+      <button class="button" type="submit">LOGIN</button>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Masukkan email Anda">
-<!-- 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Masukkan password Anda"> -->
-
-        <button type="submit">LOGIN</button>
+      {% if failed %}
+        <div class="alert" style="padding: 2%;">
+          <p class="subtitle text-center">Nama atau Email yang dimasukkan salah!</p>
+        </div>
+      {% endif %}
       </form>
       <div id="error-message"></div>
     </div>
 
-    <script>
-      function validateForm() {
-        var name = document.getElementById("name").value.trim();
-        var email = document.getElementById("email").value.trim();
-        var password = document.getElementById("password").value.trim();
-        var errorMessage = "";
-
-        if (name == "") {
-          errorMessage += "Nama harus diisi.<br>";
-        }
-
-        if (email == "") {
-          errorMessage += "Email harus diisi.<br>";
-        }
-
-        if (password == "") {
-          errorMessage += "Password harus diisi.<br>";
-        }
-
-        if (errorMessage != "") {
-          document.getElementById("error-message").innerHTML = "<div class='error'>" + errorMessage + "</div>";
-          return false;
-        }
-
-        // Pengecekan email dan password
-        // Misal email dan password sudah benar
-        window.location.href = "dashboard.html";
-
-        return false;
-      }
-    </script>
   </body>
 </html>

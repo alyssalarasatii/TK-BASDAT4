@@ -170,7 +170,9 @@ def data_partai_kompetisi_event(request):
     # if request.method == 'GET' and is_logged(request):
     #     if request.session['is_admin_satgas']:
             query = """
-                SELECT E.nama_event, E.tahun, E.nama_stadium, PK.jenis_partai, E.kategori_superseries, E.tgl_mulai, E.tgl_selesai, COUNT(PME.nomor_peserta) || '/' || S.kapasitas AS Kapasitas
+                SELECT E.nama_event, E.tahun, E.nama_stadium, PK.jenis_partai, E.kategori_superseries, 
+                E.tgl_mulai, E.tgl_selesai, COUNT(PME.nomor_peserta) || '/' || S.kapasitas AS Kapasitas,
+                COUNT(PME.nomor_peserta) AS kapasitas_terisi, S.kapasitas AS total_kapasitas
                 FROM EVENT E, PARTAI_KOMPETISI PK, PESERTA_MENDAFTAR_EVENT PME, STADIUM S
                 WHERE E.nama_event = PK.nama_event
                 AND E.nama_event = PME.nama_event
@@ -209,27 +211,86 @@ def data_hasil_pertandingan(request):
             data1 = fetch(cursor) # data1
 
             query2 = f"""
-                SELECT PMM.JENIS_BABAK, PMM.NOMOR_PESERTA
-                FROM PESERTA_MENGIKUTI_MATCH PMM
-                JOIN MATCH M ON M.jenis_babak = PMM.jenis_babak and M.tanggal = PMM.tanggal and M.waktu_mulai = PMM.waktu_mulai
-                JOIN PARTAI_KOMPETISI PK ON PK.nama_event = M.nama_event and PK.tahun_event = M.tahun_event
-
-                WHERE STATUS_MENANG = 't'
-                AND PK.jenis_partai = '{jenis_partai}'
-                AND PK.nama_event = '{nama_event}'
-                AND PK.tahun_event = {tahun_event}
-                
-                ORDER BY 
-                    array_position(array['Final','Semifinal','Perempat Final','R13','R16','R32'], 
-                                    PMM.jenis_babak);
-            """
+                SELECT 
+                    PMM.JENIS_BABAK, 
+                    PMM.status_menang,
+                    CASE 
+                        WHEN (mem0.name is not null) THEN mem0.name
+                        ELSE mem1.name || ' & ' || mem2.name 
+                    END nama_tim,
+                    CASE
+                        WHEN (PMM.JENIS_BABAK = 'Final' AND PMM.status_menang = 't') THEN 'Juara 1'
+                        WHEN (PMM.JENIS_BABAK = 'Final' AND PMM.status_menang = 'f') THEN 'Juara 2'
+                        WHEN (PMM.JENIS_BABAK = 'Semifinal' AND PMM.status_menang = 't') THEN 'Juara 3'
+                        WHEN (PMM.JENIS_BABAK = 'Semifinal' AND PMM.status_menang = 'f') THEN 'Semifinal'
+                        WHEN (PMM.JENIS_BABAK = 'Perempat Final' AND PMM.status_menang = 't') THEN 'Perempat Final'
+                        WHEN (PMM.JENIS_BABAK = 'R16' AND PMM.status_menang = 't') THEN 'R16'
+                        ELSE 'R32'
+                    END tahap   
+                FROM 
+                    PESERTA_MENGIKUTI_MATCH PMM
+                JOIN 
+                    MATCH M 
+                    ON M.jenis_babak = PMM.jenis_babak 
+                    and M.tanggal = PMM.tanggal 
+                    and M.waktu_mulai = PMM.waktu_mulai
+                JOIN 
+                    PARTAI_KOMPETISI P 
+                    ON P.nama_event = M.nama_event 
+                    and P.tahun_event = M.tahun_event
+                JOIN PESERTA_KOMPETISI PK 
+                    ON PK.nomor_peserta = PMM.nomor_peserta
+                LEFT OUTER JOIN ATLET_KUALIFIKASI AK 
+                    ON PK.id_atlet_kualifikasi = AK.id_atlet
+                LEFT OUTER JOIN ATLET_GANDA AG 
+                    ON PK.id_atlet_ganda = AG.id_atlet_ganda
+                LEFT OUTER JOIN MEMBER mem0 
+                    ON mem0.id = AK.id_atlet
+                LEFT OUTER JOIN MEMBER mem1 
+                    ON mem1.id = AG.id_atlet_kualifikasi
+                LEFT OUTER JOIN MEMBER mem2 
+                    ON mem2.ID = AG.id_atlet_kualifikasi_2
+                WHERE P.jenis_partai = '{jenis_partai}'
+                    AND P.nama_event = '{nama_event}'
+                    AND P.tahun_event = {tahun_event}
+                """
+            
             cursor = connection.cursor()
             cursor.execute('SET search_path TO babadu;')
             cursor.execute(query2)
             data2 = fetch(cursor) # data1
 
-            print(data1)
-            response = {'data1': data1[0], 'data2' : data2}
+            print(data2)
+            juara1 = []
+            juara2 = []
+            juara3 = []
+            semifinal = []
+            perempat = []
+            r16 = []
+            r32 = []
+            for data in data2:
+                if data['tahap'] == "Juara 1":
+                       juara1.append(data)
+                elif data['tahap'] == "Juara 2":
+                       juara2.append(data)
+                elif data['tahap'] == "Juara 3":
+                       juara3.append(data)
+                elif data['tahap'] == "Semifinal":
+                       semifinal.append(data)
+                elif data['tahap'] == "Perempat Final":
+                       perempat.append(data)
+                elif data['tahap'] == "R16":
+                       r16.append(data)
+                else:
+                       r32.append(data)
+            response = {'data1': data1[0], 
+                        'juara1' : juara1[0], 
+                        'juara2' : juara2[0], 
+                        'juara3' : juara3[0], 
+                        'semifinal' : semifinal[0], 
+                        'perempat' : perempat, 
+                        'r16' : r16, 
+                        'r32' : r32}
             print(response)
             return render(request, 'hasil_pertandingan.html', response)
         # return JsonResponse({'not_allowed': True})

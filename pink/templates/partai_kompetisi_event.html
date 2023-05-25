@@ -172,6 +172,10 @@ body{
     width: 100%;
     margin: 0px;
     }
+
+  #nav{
+    position: fixed;
+  }
   </style>
 
 {% endblock meta %} 
@@ -180,7 +184,7 @@ body{
 <div class="content">
 
   <div class="navigation-bar">
-      <nav class="navbar">
+      <nav class="navbar" id="nav">
 
           <ul>
             <li><a href="#">Dashboard</a></li>
@@ -188,7 +192,7 @@ body{
             <li><a href="#">Lihat Event</a></li>
             <li><a href="#">Hasil Pertandingan</a></li>
             <li class="li-logout">
-                <a href="#">
+                <a href="{% url 'login-logout:logout' %}">
                   <div class="logout-img">
                       <img src="image/icon-logout.svg" alt="">
                   </div>
@@ -204,7 +208,7 @@ body{
         </nav>
   </div>
 
-  <div class="workpage" style="margin: 5%;">
+  <div class="workpage" style="margin: 5%; margin-left: 3in;" >
       
     <div class="container">  <!--content-->
       <h1 class="subtitle text-center">List Partai Kompetisi Event</h1>
@@ -240,15 +244,19 @@ body{
               <td>{{ item.tgl_selesai|date:'d M Y' }}</td>
               <td>{{ item.kapasitas }}</td>
               <td>
-                <a href="http://" class="button"><button class="button">Mulai</button></a>
+              {% if item.kapasitas_terisi == item.total_kapasitas %}
+              
+                <a href="http://" class="button" style="margin: 2%;"><button class="button">Mulai</button></a>
                 <form action="{% url 'pink:data_hasil_pertandingan' %}" method="POST">
                   {% csrf_token %}
                   <input type="hidden" name="nama_event" value="{{ item.nama_event }}">
                   <input type="hidden" name="jenis_partai" value="{{ item.jenis_partai }}">
                   <input type="hidden" name="tahun_event" value="{{ item.tahun }}">
-                  <button class="button" type="submit">Hasil Pertandingan</button>
+                  <button class="button" type="submit" style="margin: 2%;">Hasil Pertandingan</button>
                 </form>
-              </td>
+              
+              {% endif %}
+            </td>
             </tr>
             {% endfor %}
           </tbody>

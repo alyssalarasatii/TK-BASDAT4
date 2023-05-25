@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.db import connection
 
 def fetch(cursor):
@@ -73,15 +73,35 @@ def sponsor_form(request):
         return render(request, 'sponsor_form.html', response)
     
     elif request.method == 'POST':
-        nama_sponsor = request.POST.get('nama_sponsor')
-        tanggal_mulai = request.POST.get('tanggal_mulai')
-        tanggal_selesai = request.POST.get('tanggal_selesai')
-        
-        # Do something with the data (e.g. save to database)
-        # ...
-        
-        # Render a success message
-        return render(request, 'sponsor_form.html')
+        nama_sponsor = request.POST['nama_sponsor']
+        tanggal_mulai = request.POST['tanggal_mulai']
+        tanggal_selesai = request.POST['tanggal_selesai']
+
+        cursor = connection.cursor()
+        cursor.execute('SET search_path TO babadu;')
+
+        query_find_sponsor = f"""
+            select id from sponsor where nama_brand='{nama_sponsor}';
+        """
+        cursor.execute(query_find_sponsor)
+        data_sponsor = fetch(cursor)
+        print("data sponsorrrr")
+        print(data_sponsor)
+
+        id = data_sponsor[0].get('id')
+        print(id)
+
+        query = f"""
+            INSERT INTO ATLET_SPONSOR(ID_Atlet, ID_Sponsor, Tgl_mulai, Tgl_selesai) 
+            VALUES ('e692d88a-9a46-4ff4-b07f-a72567f2e34c', '{id}', '{tanggal_mulai}', '{tanggal_selesai}');
+        """
+
+        cursor.execute(query)
+
+        # response = {'data': data}
+        # print(response)
+        return redirect('ungu:sponsor_cards')
+  
 
     
 
@@ -90,7 +110,7 @@ def sponsor_cards(request):
     query = """
         select nama_brand, tgl_mulai, tgl_selesai
         from sponsor as s, atlet_sponsor as asp, atlet as a
-        where a.id='89c0bee8-0acc-4d61-8926-8c18482f3bdf' and s.id=asp.id_sponsor and a.id=asp.id_atlet;
+        where a.id='e692d88a-9a46-4ff4-b07f-a72567f2e34c' and s.id=asp.id_sponsor and a.id=asp.id_atlet;
     """
     cursor = connection.cursor()
     cursor.execute('SET search_path TO babadu;')

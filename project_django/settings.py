@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'example_app',
     'pink',
     'login_logout',
+    'ungu',
 ]
 
 MIDDLEWARE = [

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'example_app',
     'pink',
     'login_logout',
+    'ungu',
 ]
 
 MIDDLEWARE = [
@@ -84,11 +85,11 @@ WSGI_APPLICATION = 'project_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'PORT': 5433,
+        'PORT': 5432,
         'USER': os.getenv('DB_CRED_USERNAME', 'postgres'),
         'HOST': os.getenv('DB_CRED_HOST', 'localhost'),
         'NAME': os.getenv('DB_CRED_NAME', 'postgres'),
-        'PASSWORD': os.getenv('DB_CRED_PASSWORD', ''),
+        'PASSWORD': os.getenv('DB_CRED_PASSWORD', 'postgres'),
     }
 }
 print(DATABASES)

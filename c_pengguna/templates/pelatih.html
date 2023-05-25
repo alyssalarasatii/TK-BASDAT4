@@ -1,0 +1,80 @@
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F5F5F5;
+    }
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding-top: 100px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      background-color: #FFF;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      font-size: 16px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #CCC;
+      margin-bottom: 20px;
+    }
+    .error {
+      color: #FF0000;
+      margin-bottom: 20px;
+    }
+    button {
+      font-size: 16px;
+      background-color: rgb(79, 175, 79);
+      color: #FFF;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: rgb(79, 175, 79);
+    }
+  </style>
+  
+  <h1>FORM REGISTRASI PELATIH</h1>
+  <form  method="POST" action="{% url 'c_pengguna:register-coach' %}">
+    {% csrf_token %}
+    <label for="nama">Nama:</label><br>
+    <input type="text" id="nama" name="nama"><br>
+  
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+  
+    <label for="negara">Negara:</label><br>
+    <input type="text" id="negara" name="negara"><br>
+  
+    <label for="kategori">Kategori:</label><br>
+    <input type="checkbox" id="tunggal-putra" name="kategori" value="Tunggal Putra">
+    <label for="tunggal-putra">Tunggal Putra</label><br>
+    <input type="checkbox" id="tunggal-putri" name="kategori" value="Tunggal Putri">
+    <label for="tunggal-putri">Tunggal Putri</label><br>
+    <input type="checkbox" id="ganda-putra" name="kategori" value="Ganda Putra">
+    <label for="ganda-putra">Ganda Putra</label><br>
+    <input type="checkbox" id="ganda-putri" name="kategori" value="Ganda Putri">
+    <label for="ganda-putri">Ganda Putri</label><br>
+    <input type="checkbox" id="ganda-campuran" name="kategori" value="Ganda Campuran">
+    <label for="ganda-campuran">Ganda Campuran</label><br>
+  
+    <label for="tanggal_mulai">Tanggal Mulai:</label><br>
+    <input type="date" id="tanggal_mulai" name="tanggal_mulai"><br>
+  
+    <br>
+    <!-- <input type="submit" value="DAFTAR"> -->
+    <button type="submit">DAFTAR</button>
+  
+  </form>

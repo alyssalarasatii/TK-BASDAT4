@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>BABADU - 5</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+      }
+      .container {
+        width: 400px;
+        margin: 0 auto;
+        padding-top: 100px;
+        text-align: center;
+      }
+      h1 {
+        color: #333;
+      }
+      button {
+        font-size: 16px;
+        background-color: rgb(79, 175, 79);
+        color: #FFF;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgb(79, 175, 79);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>BABADU - 5</h1>
+      <button id="loginBtn">LOGIN</button>
+      <button id="registerBtn">REGISTER</button>
+    </div>
+    <script>
+      var loginBtn = document.getElementById("loginBtn");
+      var registerBtn = document.getElementById("registerBtn");
+      loginBtn.addEventListener("click", function() {
+        window.open("LoginPage.html"); //ke halaman login saat di click
+      });
+      registerBtn.addEventListener("click", function() {
+        // melakukan suatu aksi saat button di click
+      });
+    </script>
+  </body>
+</html>
+

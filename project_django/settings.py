@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'example_app',
     'pink',
     'login_logout',
+    'atlet',
+    'c_pengguna'
 ]
 
 MIDDLEWARE = [
@@ -83,13 +85,16 @@ WSGI_APPLICATION = 'project_django.wsgi.application'
 
 DATABASES = {
     'default': {
+        # "ENGINE": "django.db.backends.sqlite3",
+        # "NAME": BASE_DIR / "db.sqlite3",
+
         # 'ENGINE': 'django.db.backends.postgresql',
-        # 'PORT': 5433,
+        # 'PORT': 5432,
         # 'USER': os.getenv('DB_CRED_USERNAME', 'postgres'),
         # 'HOST': os.getenv('DB_CRED_HOST', 'localhost'),
         # 'NAME': os.getenv('DB_CRED_NAME', 'postgres'),
         # 'PASSWORD': os.getenv('DB_CRED_PASSWORD', ''),
-        'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
         'PASSWORD': 'JuadAcvtaff6K9QktmsW',
@@ -99,10 +104,10 @@ DATABASES = {
 }
 print(DATABASES)
 
-if PRODUCTION:
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600, ssl_require=True
-    )
+# if PRODUCTION:
+#     DATABASES['default'] = dj_database_url.config(
+#         conn_max_age=600, ssl_require=True
+#     )
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

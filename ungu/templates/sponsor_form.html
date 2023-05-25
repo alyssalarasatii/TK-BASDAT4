@@ -214,6 +214,7 @@ body {
             <form method="POST">
                 {% csrf_token %}
                 <label for="id_nama_sponsor">Nama Sponsor:</label>
+                <br>
                 <select id="id_nama_sponsor" name="nama_sponsor">
                   <option value="">Pilih Sponsor</option>
                   {% for item in dropdowns %}

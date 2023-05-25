@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'pink',
     'login_logout',
     'atlet',
-    'c_pengguna'
+    'c_pengguna',
+    'ungu',
 ]
 
 MIDDLEWARE = [

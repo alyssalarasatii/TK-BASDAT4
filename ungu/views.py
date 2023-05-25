@@ -8,24 +8,31 @@ def fetch(cursor):
 # Create your views here.
 def event_cards(request):
     # events = Event.objects.all()
-    query = """
-        SELECT e.nama_event, e.tahun, e.nama_stadium, e.kategori_superseries, e.tgl_mulai, e.tgl_selesai
-            FROM babadu.event AS e, babadu.peserta_mendaftar_event AS pme, babadu.peserta_kompetisi AS pk
-            WHERE pk.nomor_peserta = '1' 
-            AND pme.nomor_peserta = pk.nomor_peserta
-            AND pme.nama_event = e.nama_event
-            AND pme.tahun = e.tahun
-    """
-    cursor = connection.cursor()
-    cursor.execute('SET search_path TO babadu;')
-    cursor.execute(query)
+    if request.method == 'GET':
+        query = """
+            SELECT e.nama_event, e.tahun, e.nama_stadium, e.kategori_superseries, e.tgl_mulai, e.tgl_selesai
+                FROM babadu.event AS e, babadu.peserta_mendaftar_event AS pme, babadu.peserta_kompetisi AS pk
+                WHERE pk.nomor_peserta = '1' 
+                AND pme.nomor_peserta = pk.nomor_peserta
+                AND pme.nama_event = e.nama_event
+                AND pme.tahun = e.tahun
+        """
+        cursor = connection.cursor()
+        cursor.execute('SET search_path TO babadu;')
+        cursor.execute(query)
 
-    data = fetch(cursor)
+        data = fetch(cursor)
 
-    response = {'data': data}
-    print(response)
-    
-    return render(request, 'event_cards.html', response)
+        response = {'data': data}
+        print(response)
+        
+        return render(request, 'event_cards.html', response)
+    elif request.method == 'POST':
+        return redirect('ungu:event_cards')
+
+
+
+
 
 def event_cards_partai(request):
     # events = Event.objects.all()

@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %} 
+{% block meta %}
     <title>FORM LOGIN</title>
     <style>
       body {
@@ -50,8 +48,10 @@
         background-color: rgb(79, 175, 79);
       }
     </style>
-  </head>
-  <body>
+
+{% endblock meta %} 
+
+{% block content %}
     <div class="container">
       <h1 class="subtitle text-center">FORM LOGIN</h1>
       <form method="POST" action="{% url 'login-logout:login' %}">
@@ -71,5 +71,4 @@
       <div id="error-message"></div>
     </div>
 
-  </body>
-</html>
+{% endblock content %}

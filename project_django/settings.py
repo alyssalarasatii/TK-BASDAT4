@@ -95,7 +95,7 @@ DATABASES = {
         # 'HOST': os.getenv('DB_CRED_HOST', 'localhost'),
         # 'NAME': os.getenv('DB_CRED_NAME', 'postgres'),
         # 'PASSWORD': os.getenv('DB_CRED_PASSWORD', ''),
-        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
         'PASSWORD': 'JuadAcvtaff6K9QktmsW',

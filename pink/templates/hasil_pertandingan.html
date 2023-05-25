@@ -1,5 +1,5 @@
 
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block meta %}
 <title>Hasil Pertandingan</title>
 <!-- connect to font ubuntu -->
@@ -67,7 +67,7 @@ body{
 
 .navbar li {
   margin-bottom: 10px;
- 
+
 }
 
 .navbar a {
@@ -132,26 +132,26 @@ body{
   .event-list {
     margin: 20px;
   }
-  
+
   table {
     border-collapse: collapse;
     width: 100%;
   }
-  
+
   th, td {
     padding: 8px;
     text-align: center;
     border-bottom: 1px solid #ddd;
   }
-  
+
   th {
     background-color: #f2f2f2;
   }
-  
+
   tr:hover {
     background-color: #f5f5f5;
   }
-  
+
   button {
     padding: 6px 12px;
     border: none;
@@ -160,7 +160,7 @@ body{
     color: white;
     cursor: pointer;
   }
-  
+
   button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -178,7 +178,7 @@ body{
   </style>
 
 
-{% endblock meta %} 
+{% endblock meta %}
 
 {% block content %}
 <div class="content">
@@ -201,7 +201,7 @@ body{
                         <p>Logout</p>
                     </div>
 
-                
+
               </a>
           </li>
           </ul>
@@ -220,7 +220,7 @@ body{
     <p>Kategori Superseries : {{data1.kategori_superseries}}</p>
     <p>Tanggal Mulai : {{data1.tgl_mulai|date:'d M Y'}}</p>
     <p>Tanggal Selesai : {{data1.tgl_selesai|date:'d M Y'}}</p>
-    <p>Kapasitas : {{data1.kapasitas}}</p>            
+    <p>Kapasitas : {{data1.kapasitas}}</p>
 
   </div>
   <div style="margin: 20%; margin-top: 5%;">
@@ -232,6 +232,9 @@ body{
             </tr>
         </thead>
         <tbody>
+
+
+
             <tr>
               <td>Juara 1</td>
               <td>{{juara1.nama_tim}}</td>
@@ -248,12 +251,28 @@ body{
               <td>Semifinal</td>
               <td>{{semifinal.nama_tim}}</td>
             </tr>
+            <tr>
+              <td rowspan="5">Perempat Final</td>
+              <!-- <td>a</td> -->
+            </tr>
             {% for item in perempat %}
             <tr>
-                <td>{{item.tahap}}</td>
+                <!-- <td>{{item.tahap}}</td> -->
                 <td>{{item.nama_tim}}</td>
             </tr>
             {% endfor %}
+            <!-- dummy -->
+            <tr>
+              <td>Jennifer Brown & Samantha Lee</td>
+            </tr>
+            <tr>
+              <td>David Johnson & Rachel Martinez</td>
+            </tr>
+            <tr>
+              <td>Jessica Garcia & Allison Baker</td>
+            </tr>
+            <!-- dummy -->
+
             {% for item in r16 %}
             <tr>
                 <td>{{item.tahap}}</td>
@@ -267,7 +286,7 @@ body{
             </tr>
             {% endfor %}
         </tbody>
-        
+
     </table>
   </div>
 </div>

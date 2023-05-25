@@ -9,10 +9,33 @@ def fetch(cursor):
 def dashboard_atlet(request):
     # events = Event.objects.all()
     query = """
-        SELECT m.name, m.email, a.tgl_lahir, a.negara_asal, a.play_right, a.height, a.jenis_kelamin, ph.total_point, a.world_rank
-            FROM member m, atlet a, point_history ph
-            WHERE m.id = a.id and a.id='e692d88a-9a46-4ff4-b07f-a72567f2e34c'
-            and ph.id_atlet = a.id;
+        SELECT
+            m.name,
+            m.email,
+            a.tgl_lahir,
+            a.negara_asal,
+            CASE WHEN a.play_right = FALSE THEN 'left' ELSE 'right' END AS play_right,
+            a.height,
+            CASE WHEN a.jenis_kelamin = FALSE THEN 'female' ELSE 'male' END AS jenis_kelamin,
+            ph.total_point,
+            a.world_rank,
+            p.name AS pelatih_name,
+            p.email AS pelatih_email,
+            CASE
+                WHEN ak.id_atlet IS NOT NULL THEN 'qualified'
+                WHEN ank.id_atlet IS NOT NULL THEN 'not qualified'
+                ELSE 'unknown'
+            END AS status
+        FROM
+            member m
+            JOIN atlet a ON m.id = a.id
+            JOIN point_history ph ON ph.id_atlet = a.id
+            LEFT JOIN atlet_pelatih ap ON ap.id_atlet = a.id
+            LEFT JOIN member p ON p.id = ap.id_pelatih
+            LEFT JOIN atlet_kualifikasi ak ON ak.id_atlet = a.id
+            LEFT JOIN atlet_non_kualifikasi ank ON ank.id_atlet = a.id
+        WHERE
+            a.id = 'e692d88a-9a46-4ff4-b07f-a72567f2e34c';
     """
     cursor = connection.cursor()
     cursor.execute('SET search_path TO babadu;')

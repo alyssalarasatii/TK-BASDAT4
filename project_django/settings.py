@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'atlet',
     'c_pengguna',
     'ungu',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ DATABASES = {
         # "ENGINE": "django.db.backends.sqlite3",
         # "NAME": BASE_DIR / "db.sqlite3",
 
-        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         # 'PORT': 5432,
         # 'USER': os.getenv('DB_CRED_USERNAME', 'postgres'),
         # 'HOST': os.getenv('DB_CRED_HOST', 'localhost'),

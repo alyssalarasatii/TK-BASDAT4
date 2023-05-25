@@ -1,0 +1,229 @@
+<style>
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  body{
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  
+  
+  .content{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    margin: 0px;
+  }
+  
+  
+  .navigation-bar{
+    background-color: whitesmoke;
+    box-shadow: 3px -10px 12px rgba(93, 176, 117, 0.25);
+    height: 100%;
+  }
+  
+  
+  .navbar {
+    width: 200px;
+    height: 100%;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    box-shadow: 3px -10px 12px rgba(176, 133, 93, 0.25);
+  }
+  
+  .navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 40px;
+  }
+  
+  .navbar li {
+    margin-bottom: 10px;
+   
+  }
+  
+  .navbar a {
+    display: block;
+    padding: 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.2s ease;
+    border-radius: 15px;
+    transition-duration: 0s;
+    transition-delay: 0s; /* Tambahkan ini */
+  }
+  
+  .navbar a:hover{
+    /* box-shadow: 0px 4px 20px 5px rgba(253, 255, 145, 0.75); */
+    background-color: #eee;
+    transform: translateY(-7px);
+    border: none;
+    transition-delay: 0s; /* Tambahkan ini */
+  }
+  
+  .navbar a:hover {
+    background-color: #eee;
+  }
+  
+  .li-logout{
+    margin-top: 180px;
+    position: absolute;
+    bottom: 10px;
+  }
+  
+  .li-logout a{
+    color: #B05D5D;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+  }
+  .li-logout a:hover{
+    transform: none;
+    background-color: #fff;
+    transform: translateX(2px);
+  }
+  .logout-p{
+    margin: 0 0 6px 10px;
+  }
+  
+  
+  /* CSS bisa mulai diedit dari sini */
+  .workpage{
+    height: 100%;
+    width: 100%;
+  }
+
+
+.workpage{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 25px;
+}
+
+.left-wp{
+    background-color: #5DB075;
+    height: 380px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+.left-wp:hover{
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.2);
+    transition: .1s;
+    }
+
+.information{
+    color: whitesmoke;
+    margin-left: 70px;
+}
+.value{
+    color: whitesmoke;
+    margin-top: 3px;
+    margin-left: 70px;
+}
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badminton App</title>
+
+    <!-- connect to font ubuntu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- connect to icon awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Eew/yvORzLQ7V11H6nuWk7asIZvH0zZPy7C9KY1gWewAymFb2sk0Vbhwyf8EmzWV7vIZAG6ZuY6Uo4Q4B3gsOQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    
+    <!-- link css, navbar untuk semua role terhubung ke satu file css yang sama biar gampang-->
+    <link rel="stylesheet" type="text/css" href="navbar.css">
+    <link rel="stylesheet" type="text/css" href="dashboard_u.css">
+    
+    
+</head>
+
+<body>
+    <div class="content">
+
+        <div class="navigation-bar">
+            <nav class="navbar">
+
+                <ul>
+                  <li><a href="#">Dashboard</a></li>
+                  <li><a href="#">Tes Kualifikasi</a></li>
+                  <li><a href="#">Daftar Event</a></li>
+                  <li><a href="#">Enrolled Event</a></li>
+                  <li><a href="#">Daftar Sponsor</a></li>
+                  <li class="li-logout">
+                      <a href="#">
+                        <div class="logout-img">
+                            <img src="image/icon-logout.svg" alt="">
+                        </div>
+
+                          <div class="logout-p">
+                              <p>Logout</p>
+                          </div>
+
+                      
+                    </a>
+                </li>
+                </ul>
+              </nav>
+        </div>
+
+        <div class="workpage">
+
+                <div class="left-wp">
+                    <div class="info">
+                        <p class="information">Nama : </p>
+                        <p class="value">{{data.0.name}}</p>
+                    </div>
+    
+                    <div class="info">
+                        <p class="information">Negara : </p>
+                        <p class="value">{{data.0.name}}</p>
+                    </div>
+    
+                    <div class="info">
+                        <p class="information">Email :</p>
+                        <p class="value">{{data.0.email}}</p>
+                    </div>
+    
+
+                </div>
+
+
+            
+        </div>
+
+
+    </div>
+    
+</body>
+
+
+</html>

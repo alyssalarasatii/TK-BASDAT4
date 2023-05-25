@@ -193,33 +193,34 @@ body {
 </head>
 
 <body>
-    <div class="content">
+  <div class="content">
+  
+    <div class="navigation-bar">
+        <nav class="navbar">
 
-        <div class="navigation-bar">
-            <nav class="navbar">
+            <ul>
+              <li><a href="{% url 'dashboard:dashboard_atlet' %}">Dashboard</a></li>
+              <li><a href="#">Tes Kualifikasi</a></li>
+              <li><a href="#">Daftar Event</a></li>
+              <li><a href="{% url 'ungu:event_cards' %}">Enrolled Event</a></li>
+              <li><a href="{% url 'ungu:event_cards_partai' %}">Enrolled Partai Kompetisi Event</a></li>
+              <li><a href="{% url 'ungu:sponsor_form' %}">Daftar Sponsor</a></li>
+              <li class="li-logout">
+                  <a href="#">
+                    <div class="logout-img">
+                        <img src="image/icon-logout.svg" alt="">
+                    </div>
 
-                <ul>
-                  <li><a href="#">Dashboard</a></li>
-                  <li><a href="#">Tes Kualifikasi</a></li>
-                  <li><a href="#">Daftar Event</a></li>
-                  <li><a href="#">Enrolled Event</a></li>
-                  <li><a href="#">Daftar Sponsor</a></li>
-                  <li class="li-logout">
-                      <a href="#">
-                        <div class="logout-img">
-                            <img src="image/icon-logout.svg" alt="">
-                        </div>
+                      <div class="logout-p">
+                          <p>Logout</p>
+                      </div>
 
-                          <div class="logout-p">
-                              <p>Logout</p>
-                          </div>
-
-                      
-                    </a>
-                </li>
-                </ul>
-              </nav>
-        </div>
+                  
+                </a>
+            </li>
+            </ul>
+          </nav>
+    </div>
 
         <div class="workpage">
           <h1>ENROLLED EVENTS</h1>
@@ -229,12 +230,19 @@ body {
                 {% for item in data %}
                 <div class="card">
                     <h2>{{item.nama_event}}</h2>
+                    <br>
                     <p><strong>Tahun: </strong>{{item.tahun}}</p>
+                    <br>
                     <p><strong>Stadium: </strong>{{item.nama_stadium}}</p>
+                    <br>
                     <p><strong>Jenis Partai: </strong>{{item.jenis_partai}}</p>
+                    <br>
                     <p><strong>Kategori Superseries: </strong>{{item.kategori_superseries}}</p>
+                    <br>
                     <p><strong>Tanggal Mulai: </strong>{{item.tgl_mulai}}</p>
+                    <br>
                     <p><strong>Tanggal Selesai: </strong>{{item.tgl_selesai}}</p>
+                    <br>
                   </div>
                   {% endfor %}
                   

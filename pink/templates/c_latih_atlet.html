@@ -106,20 +106,23 @@ body{
   height: 100%;
   width: 100%;
 }
+#nav{
+    position: fixed;
+}
 </style>
 {% endblock meta %} 
 {% block content %}
 <div class="content">
 
   <div class="navigation-bar">
-      <nav class="navbar">
+      <nav class="navbar" id="nav">
 
           <ul>
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Daftar Atlet</a></li>
             <li><a href="#">List Atlet</a></li>
             <li class="li-logout">
-                <a href="#">
+                <a href="{% url 'login-logout:logout' %}">
                   <div class="logout-img">
                       <img src="image/icon-logout.svg" alt="">
                   </div>
@@ -135,7 +138,7 @@ body{
         </nav>
   </div>
 
-  <div class="workpage" style="margin: 5%;">
+  <div class="workpage" style="margin: 5%; margin-left: 3in;">
       
 
 

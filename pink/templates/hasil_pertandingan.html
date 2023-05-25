@@ -172,6 +172,9 @@ body{
     width: 100%;
     margin: 0px;
     }
+  #nav{
+    position: fixed;
+  }
   </style>
 
 
@@ -181,7 +184,7 @@ body{
 <div class="content">
 
   <div class="navigation-bar">
-      <nav class="navbar">
+      <nav class="navbar" id="nav">
 
           <ul>
             <li><a href="#">Dashboard</a></li>
@@ -189,7 +192,7 @@ body{
             <li><a href="#">Lihat Event</a></li>
             <li><a href="#">Hasil Pertandingan</a></li>
             <li class="li-logout">
-                <a href="#">
+                <a href="{% url 'login-logout:logout' %}">
                   <div class="logout-img">
                       <img src="image/icon-logout.svg" alt="">
                   </div>
@@ -205,7 +208,7 @@ body{
         </nav>
   </div>
 
-<div class="container align-center" style="margin: 5%;">
+<div class="container align-center" style="margin: 5%; margin-left: 3in;">
   <h1 class="subtitle text-center">HASIL PERTANDINGAN {{data1.jenis_partai}} - {{data1.nama_event}}</h1>
 
   <div class="">
@@ -229,11 +232,39 @@ body{
             </tr>
         </thead>
         <tbody>
-            {% for item in data2 %}
             <tr>
-                <td>{{item.jenis_babak}}</td>
-                <td>{{item.nomor_peserta}}</td>
-              </tr>
+              <td>Juara 1</td>
+              <td>{{juara1.nama_tim}}</td>
+            </tr>
+            <tr>
+              <td>Juara 2</td>
+              <td>{{juara2.nama_tim}}</td>
+            </tr>
+            <tr>
+              <td>Juara 3</td>
+              <td>{{juara3.nama_tim}}</td>
+            </tr>
+            <tr>
+              <td>Semifinal</td>
+              <td>{{semifinal.nama_tim}}</td>
+            </tr>
+            {% for item in perempat %}
+            <tr>
+                <td>{{item.tahap}}</td>
+                <td>{{item.nama_tim}}</td>
+            </tr>
+            {% endfor %}
+            {% for item in r16 %}
+            <tr>
+                <td>{{item.tahap}}</td>
+                <td>{{item.nama_tim}}</td>
+            </tr>
+            {% endfor %}
+            {% for item in r32 %}
+            <tr>
+                <td>{{item.tahap}}</td>
+                <td>{{item.nama_tim}}</td>
+            </tr>
             {% endfor %}
         </tbody>
         

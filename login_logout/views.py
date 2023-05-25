@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.db import connection
 from collections import namedtuple
-
+from django.views.decorators.csrf import csrf_exempt
 
 def fetch(cursor):
     columns = [col[0] for col in cursor.description]
@@ -51,6 +51,7 @@ def check_session(request):
     except:
         return False
 
+@csrf_exempt
 def login(request):
     if request.method == 'POST':
         if check_session(request):

@@ -194,26 +194,27 @@ body {
 
 <body>
     <div class="content">
-
+  
         <div class="navigation-bar">
             <nav class="navbar">
-
+    
                 <ul>
-                  <li><a href="#">Dashboard</a></li>
+                  <li><a href="{% url 'dashboard:dashboard_atlet' %}">Dashboard</a></li>
                   <li><a href="#">Tes Kualifikasi</a></li>
                   <li><a href="#">Daftar Event</a></li>
-                  <li><a href="#">Enrolled Event</a></li>
-                  <li><a href="#">Daftar Sponsor</a></li>
+                  <li><a href="{% url 'ungu:event_cards' %}">Enrolled Event</a></li>
+                  <li><a href="{% url 'ungu:event_cards_partai' %}">Enrolled Partai Kompetisi Event</a></li>
+                  <li><a href="{% url 'ungu:sponsor_form' %}">Daftar Sponsor</a></li>
                   <li class="li-logout">
                       <a href="#">
                         <div class="logout-img">
                             <img src="image/icon-logout.svg" alt="">
                         </div>
-
+    
                           <div class="logout-p">
                               <p>Logout</p>
                           </div>
-
+    
                       
                     </a>
                 </li>

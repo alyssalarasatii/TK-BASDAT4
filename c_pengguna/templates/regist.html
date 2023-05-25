@@ -25,6 +25,17 @@
     button:hover {
       background-color: rgb(79, 175, 79);
     }
+    .btn {
+      font-size: 16px;
+      background-color: rgb(79, 175, 79);
+      color: #FFF;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      text-decoration: none;
+    }
 
 </style>
 
@@ -32,10 +43,10 @@
 
   <h2>REGISTER</h2>
 
-  <a href="{% url 'c_pengguna:register-atlet' %}">ATLET</a>
+  <a class = 'btn' href="{% url 'c_pengguna:register-atlet' %}">ATLET</a>
 
-  <a href="{% url 'c_pengguna:register-coach' %}">PELATIH</a>
+  <a class = 'btn' href="{% url 'c_pengguna:register-coach' %}">PELATIH</a>
 
-  <a href="{% url 'c_pengguna:register-umpire' %}">UMPIRE</a>
+  <a class = 'btn' href="{% url 'c_pengguna:register-umpire' %}">UMPIRE</a>
 
 </div>

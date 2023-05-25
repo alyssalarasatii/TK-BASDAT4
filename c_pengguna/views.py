@@ -4,10 +4,6 @@ import uuid
 from django.contrib import messages
 
 # Create your views here.
-def login(request):
-    return render(request, 'login.html')
-
-
 def register(request):
     return render(request, 'regist.html')
 
@@ -72,10 +68,11 @@ def create_spesialisasi(cursor, ID: str, kategori: str) -> None:
 def register_umpire(request):
     if (request.method == 'POST'):
         connection = psycopg2.connect(
-            host="localhost",
-            database="postgres",
+            host="containers-us-west-18.railway.app",
+            database = "railway",
             user="postgres",
-            password="dave1030"
+            password="JuadAcvtaff6K9QktmsW",
+            port = 7550
         )
 
         cursor = connection.cursor()
@@ -89,6 +86,7 @@ def register_umpire(request):
             create_umpire(cursor, id, negara)
 
             connection.commit()
+            return redirect('login-logout:login')
 
         except Exception as e:
             connection.rollback()
@@ -103,16 +101,18 @@ def register_atlet(request):
     if (request.method == 'POST'):
         print('test')
         connection = psycopg2.connect(
-            host="localhost",
-            database="postgres",
+            host="containers-us-west-18.railway.app",
+            database = "railway",
             user="postgres",
-            password="dave1030"
+            password="JuadAcvtaff6K9QktmsW",
+            port = 7550
     )
 
         cursor = connection.cursor()
         cursor.execute("SET SEARCH_PATH TO BABADU")
         id = str(uuid.uuid4())
         name = request.POST.get('name')
+        print(name)
         email = request.POST.get('email')
         negara = request.POST.get('country')
         tgl_lahir = request.POST.get('birthdate')
@@ -133,6 +133,7 @@ def register_atlet(request):
 
             connection.commit()
             connection.close()
+            return redirect('login-logout:login')
         except Exception as e:
             connection.rollback()
             messages.error(request, "Gagal mendaftar perika input anda")
@@ -144,10 +145,11 @@ def register_atlet(request):
 def register_pelatih(request):
     if (request.method == 'POST'):
         connection = psycopg2.connect(
-            host="localhost",
-            database="postgres",
+            host="containers-us-west-18.railway.app",
+            database = "railway",
             user="postgres",
-            password="dave1030"
+            password="JuadAcvtaff6K9QktmsW",
+            port = 7550
     )
 
         cursor = connection.cursor()
@@ -163,6 +165,7 @@ def register_pelatih(request):
             create_pelatih(cursor, id, kategori, tgl_mulai)
             connection.commit()
             connection.close()
+            return redirect('login-logout:login')
 
         except Exception as e:
             connection.rollback()

@@ -1,0 +1,81 @@
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F5F5F5;
+    }
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding-top: 100px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      background-color: #FFF;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      font-size: 16px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #CCC;
+      margin-bottom: 20px;
+    }
+    .error {
+      color: #FF0000;
+      margin-bottom: 20px;
+    }
+    button {
+      font-size: 16px;
+      background-color: rgb(79, 175, 79);
+      color: #FFF;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: rgb(79, 175, 79);
+    }
+  </style>
+  
+  <h2>FORM REGISTRASI ATLET</h2>
+  <form method="POST" action="{% url 'c_pengguna:register-atlet' %}">
+    {% csrf_token %}
+    <label for="name">Nama:</label><br>
+    <input type="text" id="name" name="name"><br>
+  
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+  
+    <label for="country">Negara:</label><br>
+    <input type="text" id="country" name="country"><br>
+  
+    <label for="birthdate">Tanggal Lahir:</label><br>
+    <input type="date" id="birthdate" name="birthdate"><br>
+  
+    <label for="play">Play:</label><br>
+    <input type="radio" id="left" name="play" value="left">
+    <label for="left">Left</label><br>
+    <input type="radio" id="right" name="play" value="right">
+    <label for="right">Right</label><br>
+  
+    <label for="height">Tinggi Badan:</label><br>
+    <input type="number" id="height" name="height"><br>
+  
+    <label for="gender">Jenis Kelamin:</label><br>
+    <select id="gender" name="gender">
+      <option value="laki">Laki-laki</option>
+      <option value="perempuan">Perempuan</option>
+    </select><br><br>
+  
+    <!-- <input type="submit" value="DAFTAR"> -->
+    <button type="submit">DAFTAR</button>
+  </form>

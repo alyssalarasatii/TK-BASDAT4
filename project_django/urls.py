@@ -21,6 +21,7 @@ urlpatterns = [
     path('', include('example_app.urls')),
     path('pink/', include('pink.urls')),
     path('login-logout/', include('login_logout.urls')),
+    path('register/', include('c_pengguna.urls')),
+    path('atlet/', include('atlet.urls')),
     path('ungu/', include('ungu.urls')),
-
 ]
